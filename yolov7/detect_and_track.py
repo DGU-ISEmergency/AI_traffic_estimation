@@ -17,7 +17,7 @@ from utils.general import check_img_size, check_requirements, \
 from utils.plots import plot_one_box
 from utils.torch_utils import select_device, load_classifier, \
                 time_synchronized, TracedModel
-from utils.download_weights import download
+# from utils.download_weights import download
 
 #For SORT tracking
 import skimage
@@ -279,7 +279,7 @@ def detect(save_img=False):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--weights', nargs='+', type=str, default='yolov7.pt', help='model.pt path(s)')
+    parser.add_argument('--weights', nargs='+', type=str, default='runs/train/yolov7x2/weights/best.pt', help='model.pt path(s)')
     parser.add_argument('--download', action='store_true', help='download model weights automatically')
     parser.add_argument('--no-download', dest='download', action='store_false',help='not download model weights if already exist')
     parser.add_argument('--source', type=str, default='inference/images', help='source')  # file/folder, 0 for webcam
@@ -309,11 +309,11 @@ if __name__ == '__main__':
     #check_requirements(exclude=('pycocotools', 'thop'))
     if opt.download and not os.path.exists(''.join(opt.weights)):
         print('Model weights not found. Attempting to download now...')
-        download('./')
+        # download('./')
 
     with torch.no_grad():
         if opt.update:  # update all models (to fix SourceChangeWarning)
-            for opt.weights in ['yolov7.pt']:
+            for opt.weights in ['runs/train/yolov7x2/weights/best.pt']:
                 detect()
                 strip_optimizer(opt.weights)
         else:
