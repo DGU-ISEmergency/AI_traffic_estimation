@@ -9,4 +9,11 @@ python -m torch.distributed.launch --nproc_per_node 2 --master_port 9527 train.p
 
 
 
-+ tracking 추가
+## Tracking 추가
+config default 값 이미 설정해놓음
+
+`runs/train/yolov7x2/weights/best.pt` 의 weight 값을 사용하여 tracking을 진행함
+
+``` shell
+python detect_and_track.py
+```
