@@ -40,18 +40,18 @@
 import zipfile
 import os
 
-# def unzip_files_in_folder(folder_path):
-#     for root, _, files in os.walk(folder_path):
-#         for file in files:
-#             if file.endswith('.zip'):
-#                 zip_file_path = os.path.join(root, file)
-#                 extract_to_path = os.path.join(root, file[:-4])  # Remove '.zip' extension
-#                 os.makedirs(extract_to_path, exist_ok=True)
-#                 with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
-#                     zip_ref.extractall(extract_to_path)
-#                 print(f"Extracted '{zip_file_path}' to '{extract_to_path}'")
-#
-# # 사용 예시
-# folder_path = 'D:/교통문제 해결을 위한 CCTV 교통 영상(시내도로)/Training/교통안전(Segmantation)'
-# unzip_files_in_folder(folder_path)
+def unzip_files_in_folder(folder_path):
+    for root, _, files in os.walk(folder_path):
+        for file in files:
+            if file.endswith('.zip'):
+                zip_file_path = os.path.join(root, file)
+                extract_to_path = os.path.join(root, file[:-4])  # Remove '.zip' extension
+                os.makedirs(extract_to_path, exist_ok=True)
+                with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
+                    zip_ref.extractall(extract_to_path)
+                print(f"Extracted '{zip_file_path}' to '{extract_to_path}'")
+
+# 사용 예시
+folder_path = 'D:/교통 image/Validation/교통안전(Bbox)'
+unzip_files_in_folder(folder_path)
 
