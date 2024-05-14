@@ -42,3 +42,4 @@ thop  # FLOPs computation
 
 scikit-image
 filterpy
+supervision==0.8.0
