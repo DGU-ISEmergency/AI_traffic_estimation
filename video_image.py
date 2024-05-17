@@ -47,23 +47,35 @@ image = cv2.imread(path, cv2.IMREAD_COLOR)
 
 # 6-1
 # 6
-area6_pointA = (422, 407)
-area6_pointB = (415, 438)
-area6_pointC = (391, 407)
-area6_pointD = (382, 437)
+# area6_pointA = (835, 434)
+# area6_pointB = (834, 457)
+# area6_pointC = (848, 433)
+# area6_pointD = (848, 456)
+#
+# # 7
+# area7_pointA = (834, 460)
+# area7_pointB = (832, 481)
+# area7_pointC = (847, 463)
+# area7_pointD = (853, 488)
+
 
 # 7
-area7_pointA = (412, 439)
-area7_pointB = (405, 450)
-area7_pointC = (381, 439)
-area7_pointD = (372, 450)
+area6_pointA = (866, 525)
+area6_pointB = (905, 525)
+area6_pointC = (866, 550)
+area6_pointD = (900, 550)
 
-# 8
-area8_pointA = (408, 450)
-area8_pointB = (400, 460)
-area8_pointC = (376, 450)
-area8_pointD = (368, 460)
-
+# # 6 초록
+# area7_pointA = (780, 425)
+# area7_pointB = (780, 448)
+# area7_pointC = (760, 425)
+# area7_pointD = (760, 448)
+#
+# # 8 파랑
+# area8_pointA = (780, 448)
+# area8_pointB = (780, 465)
+# area8_pointC = (760, 448)
+# area8_pointD = (760, 465)
 
 # area1_pointA = (318, 454)
 # area1_pointB = (315, 464)
@@ -86,10 +98,11 @@ area8_pointD = (368, 460)
 # Line drawn from (335, 526) to (331, 532)
 cv2.line(image, area6_pointA, area6_pointB, (0, 255, 0), 2)
 cv2.line(image, area6_pointC, area6_pointD, (0, 255, 0), 2)
-cv2.line(image, area7_pointA, area7_pointB, (255, 255, 0), 2)
-cv2.line(image, area7_pointC, area7_pointD, (255, 255, 0), 2)
-cv2.line(image, area8_pointA, area8_pointB, (0, 255, 255), 2)
-cv2.line(image, area8_pointC, area8_pointD, (0, 255, 255), 2)
+# cv2.line(image, area7_pointA, area7_pointB, (255, 255, 0), 2)
+# cv2.line(image, area7_pointC, area7_pointD, (255, 255, 0), 2)
+# cv2.line(image, area8_pointA, area8_pointB, (0, 255, 255), 2)
+# cv2.line(image, area8_pointC, area8_pointD, (0, 255, 255), 2)
+
 
 
 cv2.imshow("image", image)

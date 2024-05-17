@@ -24,55 +24,84 @@ from sort import *
 """ Random created palette"""
 palette = (2 ** 11 - 1, 2 ** 15 - 1, 2 ** 20 - 1)
 
+# right turn
+# 1
+area0_pointA = (520, 350)
+area0_pointB = (538, 350)
+area0_pointC = (510, 370)
+area0_pointD = (525, 370)
+
+
 # 1
 area1_pointA = (538, 350)
 area1_pointB = (565, 350)
-area1_pointC = (535, 370)
-area1_pointD = (560, 370)
+area1_pointC = (525, 370)
+area1_pointD = (555, 370)
 
 # 2
 area2_pointA = (565, 350)
 area2_pointB = (590, 350)
-area2_pointC = (560, 370)
-area2_pointD = (585, 370)
+area2_pointC = (555, 370)
+area2_pointD = (580, 370)
 
 # 3
 area3_pointA = (595, 350)
 area3_pointB = (620, 350)
-area3_pointC = (590, 370)
-area3_pointD = (620, 370)
+area3_pointC = (585, 370)
+area3_pointD = (610, 370)
 
 # 4
 area4_pointA = (620, 350)
 area4_pointB = (648, 350)
-area4_pointC = (615, 370)
-area4_pointD = (648, 370)
+area4_pointC = (610, 370)
+area4_pointD = (638, 370)
 #
 # 5
 area5_pointA = (648, 350)
 area5_pointB = (670, 350)
-area5_pointC = (643, 370)
+area5_pointC = (638, 370)
 area5_pointD = (670, 370)
 
 # 6
-area6_pointA = (422, 407)
-area6_pointB = (415, 438)
-area6_pointC = (391, 407)
-area6_pointD = (382, 437)
+area6_pointA = (625, 640)
+area6_pointB = (667, 641)
+area6_pointC = (625, 665)
+area6_pointD = (663, 665)
+
 
 # 7
-area7_pointA = (412, 435)
-area7_pointB = (408, 453)
-area7_pointC = (381, 439)
-area7_pointD = (378, 453)
-#
+area7_pointA = (667, 640)
+area7_pointB = (707, 641)
+area7_pointC = (665, 665)
+area7_pointD = (702, 668)
+
 # 8
-area8_pointA = (409, 453)
-area8_pointB = (404, 464)
-area8_pointC = (376, 453)
-area8_pointD = (373, 464)
+area8_pointA = (708, 638)
+area8_pointB = (750, 642)
+area8_pointC = (707, 667)
+area8_pointD = (742, 666)
+
+# 10
+area9_pointA = (740, 679)
+area9_pointB = (778, 679)
+area9_pointC = (739, 697)
+area9_pointD = (773, 695)
+
+# 11
+area10_pointA = (781, 608)
+area10_pointB = (813, 606)
+area10_pointC = (782, 631)
+area10_pointD = (817, 633)
 
 
+# 11
+area11_pointA = (866, 525)
+area11_pointB = (905, 525)
+area11_pointC = (866, 550)
+area11_pointD = (900, 550)
+
+counting_0 = 0
+modulo_counting_0 = 0
 counting_1 = 0
 modulo_counting_1 = 0
 counting_2 = 0
@@ -89,10 +118,14 @@ counting_7 = 0
 modulo_counting_7 = 0
 counting_8 = 0
 modulo_counting_8 = 0
-# counting_9 = 0
-# modulo_counting_9 = 0
-# counting_10 = 0
-# modulo_counting_10 = 0
+counting_9 = 0
+modulo_counting_9 = 0
+counting_10 = 0
+modulo_counting_10 = 0
+counting_11 =0
+modulo_counting_11 = 0
+
+
 
 
 """" Calculates the relative bounding box from absolute pixel values. """
@@ -109,13 +142,7 @@ def count_vehicles(count_vehicle, counting, array_ids, modulo_counting):
                 array_ids.clear()
     return counting, modulo_counting
 
-def check_area(midpoint_x, midpoint_y, area_pointA, area_pointD, array_ids, id, label, is_vertical=False):
-
-    # Check if the line is vertical
-    if is_vertical:
-        # Swap x and y coordinates for vertical lines
-        midpoint_x, midpoint_y = midpoint_y, midpoint_x
-        area_pointA, area_pointD = (area_pointA[1], area_pointA[0]), (area_pointD[1], area_pointD[0])
+def check_area(midpoint_x, midpoint_y, area_pointA, area_pointD, array_ids, id, label):
 
     # Check if the vehicle has crossed the line
     if (midpoint_x > area_pointA[0] and midpoint_x < area_pointD[0]) and (midpoint_y > area_pointA[1] and midpoint_y < area_pointD[1]):
@@ -152,7 +179,7 @@ def compute_color_for_labels(label):
 
 
 
-def draw_boxes(img, bbox, identities=None, categories=None, names=None, offset=(0, 0), array_ids_1=[], array_ids_2=[], array_ids_3=[], array_ids_4=[], array_ids_5=[], array_ids_6=[], array_ids_7=[], array_ids_8=[]):
+def draw_boxes(img, bbox, identities=None, categories=None, names=None, offset=(0, 0), array_ids_0 =[], array_ids_1=[], array_ids_2=[], array_ids_3=[], array_ids_4=[], array_ids_5=[], array_ids_6=[], array_ids_7=[], array_ids_8=[], array_ids_9=[], array_ids_10=[], array_ids_11=[]):
     for i, box in enumerate(bbox):
         x1, y1, x2, y2 = [int(i) for i in box]
         x1 += offset[0]
@@ -177,16 +204,18 @@ def draw_boxes(img, bbox, identities=None, categories=None, names=None, offset=(
         midpoint_color = (0, 255, 0)
         # vehicles total counting variables
 
+        array_ids_0 = check_area(midpoint_x, midpoint_y, area0_pointA, area0_pointD, array_ids_0, id, label)
         array_ids_1 = check_area(midpoint_x, midpoint_y, area1_pointA, area1_pointD, array_ids_1, id, label)
         array_ids_2 = check_area(midpoint_x, midpoint_y, area2_pointA, area2_pointD, array_ids_2, id, label)
         array_ids_3 = check_area(midpoint_x, midpoint_y, area3_pointA, area3_pointD, array_ids_3, id, label)
         array_ids_4 = check_area(midpoint_x, midpoint_y, area4_pointA, area4_pointD, array_ids_4, id, label)
         array_ids_5 = check_area(midpoint_x, midpoint_y, area5_pointA, area5_pointD, array_ids_5, id, label)
-        array_ids_6 = check_area(midpoint_x, midpoint_y, area6_pointA, area6_pointD, array_ids_6, id, label,is_vertical=True)
-        array_ids_7 = check_area(midpoint_x, midpoint_y, area7_pointA, area7_pointD, array_ids_7, id, label,is_vertical=True)
-        array_ids_8 = check_area(midpoint_x, midpoint_y, area8_pointA, area8_pointD, array_ids_8, id, label,is_vertical=True)
-        # array_ids_9 = check_area(midpoint_x, midpoint_y, area9_pointA, area9_pointD, array_ids_9, id, label)
-        # array_ids_10 = check_area(midpoint_x, midpoint_y, area10_pointA, area10_pointD, array_ids_10, id, label)
+        array_ids_6 = check_area(midpoint_x, midpoint_y, area6_pointA, area6_pointD, array_ids_6, id, label)
+        array_ids_7 = check_area(midpoint_x, midpoint_y, area7_pointA, area7_pointD, array_ids_7, id, label)
+        array_ids_8 = check_area(midpoint_x, midpoint_y, area8_pointA, area8_pointD, array_ids_8, id, label)
+        array_ids_9 = check_area(midpoint_x, midpoint_y, area9_pointA, area9_pointD, array_ids_9, id, label)
+        array_ids_10 = check_area(midpoint_x, midpoint_y, area10_pointA, area10_pointD, array_ids_10, id, label)
+        array_ids_11 = check_area(midpoint_x, midpoint_y, area11_pointA, area11_pointD, array_ids_11, id, label)
 
 
         cv2.circle(img, center_point, radius=1, color=midpoint_color, thickness=2)
@@ -197,7 +226,7 @@ def draw_boxes(img, bbox, identities=None, categories=None, names=None, offset=(
 # ..............................................................................
 
 
-def detect(save_img=False, counting_1=0, modulo_counting_1=0, counting_2=0, modulo_counting_2=0, counting_3=0, modulo_counting_3=0, counting_4=0, modulo_counting_4=0, counting_5=0, modulo_counting_5=0, counting_6=0, modulo_counting_6=0, counting_7=0, modulo_counting_7=0, counting_8 =0, modulo_counting_8 = 0, array_ids_1=[], array_ids_2=[], array_ids_3=[], array_ids_4=[], array_ids_5=[], array_ids_6=[], array_ids_7=[], array_ids_8=[]):
+def detect(save_img=False,counting_0 = 0,modulo_counting_0 = 0, counting_1=0, modulo_counting_1=0, counting_2=0, modulo_counting_2=0, counting_3=0, modulo_counting_3=0, counting_4=0, modulo_counting_4=0, counting_5=0, modulo_counting_5=0,counting_6=0, modulo_counting_6 =0, counting_7=0,modulo_counting_7=0,counting_8=0, modulo_counting_8=0, counting_9=0, modulo_counting_9=0,counting_10=0, modulo_counting_10=0,counting_11=0, modulo_counting_11=0, array_ids_0 = [], array_ids_1=[], array_ids_2=[], array_ids_3=[], array_ids_4=[], array_ids_5=[], array_ids_6=[], array_ids_7=[], array_ids_8=[], array_ids_9=[], array_ids_10=[], array_ids_11=[]):
 
     source, weights, view_img, save_txt, imgsz, trace = opt.source, opt.weights, opt.view_img, opt.save_txt, opt.img_size, not opt.no_trace
     save_img = not opt.nosave and not source.endswith('.txt')  # save inference images
@@ -276,6 +305,7 @@ def detect(save_img=False, counting_1=0, modulo_counting_1=0, counting_2=0, modu
             old_img_b = img.shape[0]
             old_img_h = img.shape[2]
             old_img_w = img.shape[3]
+
             for i in range(3):
                 model(img, augment=opt.augment)[0]
 
@@ -347,13 +377,16 @@ def detect(save_img=False, counting_1=0, modulo_counting_1=0, counting_2=0, modu
                     bbox_xyxy = tracked_dets[:, :4]
                     identities = tracked_dets[:, 8]
                     categories = tracked_dets[:, 4]
-                    draw_boxes(im0, bbox_xyxy, identities, categories, names, array_ids_1=array_ids_1, array_ids_2=array_ids_2, array_ids_3=array_ids_3, array_ids_4=array_ids_4, array_ids_5=array_ids_5, array_ids_6=array_ids_6, array_ids_7=array_ids_7)
+                    draw_boxes(im0, bbox_xyxy, identities, categories, names, array_ids_0 = array_ids_0, array_ids_1=array_ids_1, array_ids_2=array_ids_2, array_ids_3=array_ids_3, array_ids_4=array_ids_4, array_ids_5=array_ids_5, array_ids_6=array_ids_6, array_ids_7=array_ids_7, array_ids_8=array_ids_8, array_ids_9=array_ids_9, array_ids_10=array_ids_10, array_ids_11=array_ids_11)
                     # array_ids_5=array_ids_5, array_ids_6=array_ids_6)
                     print('Bbox xy count : ' + str(len(bbox_xyxy)))
                 # ........................................................
 
             # Print time (inference + NMS)
             # print(f'{s}Done. ({(1E3 * (t2 - t1)):.1f}ms) Inference, ({(1E3 * (t3 - t2)):.1f}ms) NMS')
+
+            cv2.line(im0, area0_pointA, area0_pointB, (0, 0, 0), 2)
+            cv2.line(im0, area0_pointC, area0_pointD, (0, 0, 0), 2)
 
             cv2.line(im0, area1_pointA, area1_pointB, (255, 0, 0), 2)
             cv2.line(im0, area1_pointC, area1_pointD, (255, 0, 0), 2)
@@ -370,20 +403,24 @@ def detect(save_img=False, counting_1=0, modulo_counting_1=0, counting_2=0, modu
             cv2.line(im0, area5_pointA, area5_pointB, (0, 255, 0), 2)
             cv2.line(im0, area5_pointC, area5_pointD, (0, 255, 0), 2)
 
-            cv2.line(im0, area6_pointA, area6_pointB, (0, 255, 0), 2)
-            cv2.line(im0, area6_pointC, area6_pointD, (0, 255, 0), 2)
+            cv2.line(im0, area6_pointA, area6_pointB, (0, 125, 0), 2)
+            cv2.line(im0, area6_pointC, area6_pointD, (0, 125, 0), 2)
 
-            cv2.line(im0, area7_pointA, area7_pointB, (0, 0, 255), 2)
-            cv2.line(im0, area7_pointC, area7_pointD, (0, 0, 255), 2)
-            #
-            cv2.line(im0, area8_pointA, area8_pointB, (255, 255, 0), 2)
-            cv2.line(im0, area8_pointC, area8_pointD, (255, 255, 0), 2)
+            cv2.line(im0, area7_pointA, area7_pointB, (125, 0, 0), 2)
+            cv2.line(im0, area7_pointC, area7_pointD, (125, 0, 0), 2)
 
-            # cv2.line(im0, area9_pointA, area9_pointB, (0, 255, 0), 2)
-            # cv2.line(im0, area9_pointC, area9_pointD, (0, 255, 0), 2)
-            #
-            # cv2.line(im0, area10_pointA, area10_pointB, (0, 255, 0), 2)
-            # cv2.line(im0, area10_pointC, area10_pointD, (0, 255, 0), 2)
+            cv2.line(im0, area8_pointA, area8_pointB, (0, 0, 125), 2)
+            cv2.line(im0, area8_pointC, area8_pointD, (0, 0, 125), 2)
+
+            cv2.line(im0, area9_pointA, area9_pointB, (125, 125, 0), 2)
+            cv2.line(im0, area9_pointC, area9_pointD, (125, 125, 0), 2)
+
+            cv2.line(im0, area10_pointA, area10_pointB, (0, 125, 125), 2)
+            cv2.line(im0, area10_pointC, area10_pointD, (0, 125, 125), 2)
+
+            cv2.line(im0, area11_pointA, area11_pointB, (125, 0, 125), 2)
+            cv2.line(im0, area11_pointC, area11_pointD, (125, 0, 125), 2)
+
 
 
             color = (0, 255, 0)
@@ -392,7 +429,7 @@ def detect(save_img=False, counting_1=0, modulo_counting_1=0, counting_2=0, modu
             font = cv2.FONT_HERSHEY_SIMPLEX
             org = (160, 570)
 
-
+            counting_0, modulo_counting_0 = count_vehicles(count_vehicle, counting_0, array_ids_0, modulo_counting_0)
             counting_1, modulo_counting_1 = count_vehicles(count_vehicle, counting_1, array_ids_1, modulo_counting_1)
             counting_2, modulo_counting_2 = count_vehicles(count_vehicle, counting_2, array_ids_2, modulo_counting_2)
             counting_3, modulo_counting_3 = count_vehicles(count_vehicle, counting_3, array_ids_3, modulo_counting_3)
@@ -401,22 +438,13 @@ def detect(save_img=False, counting_1=0, modulo_counting_1=0, counting_2=0, modu
             counting_6, modulo_counting_6 = count_vehicles(count_vehicle, counting_6, array_ids_6, modulo_counting_6)
             counting_7, modulo_counting_7 = count_vehicles(count_vehicle, counting_7, array_ids_7, modulo_counting_7)
             counting_8, modulo_counting_8 = count_vehicles(count_vehicle, counting_8, array_ids_8, modulo_counting_8)
-            # counting_9, modulo_counting_9 = count_vehicles(count_vehicle, counting_9, array_ids_9, modulo_counting_9)
-            # counting_10, modulo_counting_10 = count_vehicles(count_vehicle, counting_10, array_ids_10, modulo_counting_10)
+            counting_9, modulo_counting_9 = count_vehicles(count_vehicle, counting_9, array_ids_9, modulo_counting_9)
+            counting_10, modulo_counting_10 = count_vehicles(count_vehicle, counting_10, array_ids_10, modulo_counting_10)
+            counting_11, modulo_counting_11 = count_vehicles(count_vehicle, counting_11, array_ids_11, modulo_counting_11)
 
-            # print(array_ids_7, array_ids_8)
-            # print(array_ids_1, array_ids_2, array_ids_3, array_ids_4)
-            print(array_ids_5, array_ids_6, array_ids_7, array_ids_8)
-            # print(counting_1, counting_2, counting_3, counting_4)
 
-            # cv2.putText(im0, 'Vehicle Counting = ' + str(counting_1), org, font, fontScale, color, thickness, cv2.LINE_AA)
-            # cv2.putText(im0, 'Vehicle Counting = ' + str(counting_2), org, font, fontScale, color, thickness, cv2.LINE_AA)
-            # cv2.putText(im0, 'Vehicle Counting = ' + str(counting_3), org, font, fontScale, color, thickness,
-            #             cv2.LINE_AA)
-            # cv2.putText(im0, 'Vehicle Counting = ' + str(counting_4), org, font, fontScale, color, thickness,
-            #             cv2.LINE_AA)
-            # cv2.putText(im0, 'Vehicle Counting = ' + str(counting_5), org, font, fontScale, color, thickness,
-            #             cv2.LINE_AA)
+            print(array_ids_6,array_ids_7, array_ids_8, array_ids_9, array_ids_10, array_ids_11)
+            # print(array_ids_0, counting_1, counting_2, counting_3, counting_4,counting_5)
 
             # Stream results
             if view_img:
@@ -450,6 +478,7 @@ def detect(save_img=False, counting_1=0, modulo_counting_1=0, counting_2=0, modu
     print(f'Done. ({time.time() - t0:.3f}s)')
 
     df = pd.DataFrame({
+        'List0': pd.Series(array_ids_0),
         'List1': pd.Series(array_ids_1),
         'List2': pd.Series(array_ids_2),
         'List3': pd.Series(array_ids_3),
@@ -457,19 +486,21 @@ def detect(save_img=False, counting_1=0, modulo_counting_1=0, counting_2=0, modu
         'List5': pd.Series(array_ids_5),
         'List6': pd.Series(array_ids_6),
         'List7': pd.Series(array_ids_7),
-        'List8': pd.Series(array_ids_8)
-        # 'List9': pd.Series(array_ids_9),
-        # 'List10': pd.Series(array_ids_10)
+        'List8': pd.Series(array_ids_8),
+        'List9': pd.Series(array_ids_9),
+        'List10': pd.Series(array_ids_10),
+        'List11': pd.Series(array_ids_11),
+
     })
 
     # Save the DataFrame to a CSV file
-    df.to_csv('result.csv', index=False)
+    df.to_csv('tri_1_row.csv', index=False)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--weights', nargs='+', type=str, default='runs/train/yolov7x2/weights/best.pt', help='model.pt path(s)')
-    parser.add_argument('--source', type=str, default='inference/images/test4.mp4', help='source')  # file/folder, 0 for webcam
+    parser.add_argument('--source', type=str, default='inference/images/testssss.mp4', help='source')  # file/folder, 0 for webcam
     parser.add_argument('--img-size', type=int, default=640, help='inference size (pixels)')
     parser.add_argument('--conf-thres', type=float, default=0.65, help='object confidence threshold')
     parser.add_argument('--iou-thres', type=float, default=0.45, help='IOU threshold for NMS')
@@ -488,15 +519,13 @@ if __name__ == '__main__':
     parser.add_argument('--no-trace', action='store_true', help='don`t trace model')
     opt = parser.parse_args()
     print(opt)
-    # check_requirements(exclude=('pycocotools', 'thop'))
+
 
     with torch.no_grad():
         if opt.update:  # update all models (to fix SourceChangeWarning)
             for opt.weights in ['runs/train/yolov7x2/weights/best.pt']:
-                detect(save_img=False, counting_1=counting_1, modulo_counting_1=modulo_counting_1, counting_2=counting_2, modulo_counting_2=modulo_counting_2, counting_3=counting_3, modulo_counting_3=modulo_counting_3, counting_4=counting_4, modulo_counting_4=modulo_counting_4, counting_5=counting_5, modulo_counting_5=modulo_counting_5, counting_6=counting_6, modulo_counting_6=modulo_counting_6, counting_7=counting_7,modulo_counting_7=modulo_counting_7, counting_8=counting_8, modulo_counting_8=modulo_counting_8)
-                # , counting_9=counting_9, modulo_counting_9=modulo_counting_9, counting_10=counting_10, modulo_counting_10=modulo_counting_10)
+                detect(save_img=False,counting_0=counting_0,modulo_counting_0=modulo_counting_0, counting_1=counting_1, modulo_counting_1=modulo_counting_1, counting_2=counting_2, modulo_counting_2=modulo_counting_2, counting_3=counting_3, modulo_counting_3=modulo_counting_3, counting_4=counting_4, modulo_counting_4=modulo_counting_4, counting_5=counting_5, modulo_counting_5=modulo_counting_5, counting_6=counting_6, modulo_counting_6=modulo_counting_6, counting_7=counting_7, modulo_counting_7=modulo_counting_7, counting_8=counting_8, modulo_counting_8=modulo_counting_8, counting_9=counting_9, modulo_counting_9=modulo_counting_9, counting_10=counting_10, modulo_counting_10=modulo_counting_10, counting_11=counting_11, modulo_counting_11=modulo_counting_11)
                 strip_optimizer(opt.weights)
 
         else:
-            detect(save_img=False, counting_1=counting_1, modulo_counting_1=modulo_counting_1, counting_2=counting_2, modulo_counting_2=modulo_counting_2, counting_3=counting_3, modulo_counting_3=modulo_counting_3, counting_4=counting_4, modulo_counting_4=modulo_counting_4, counting_5=counting_5, modulo_counting_5=modulo_counting_5, counting_6=counting_6, modulo_counting_6=modulo_counting_6, counting_7=counting_7, modulo_counting_7=modulo_counting_7, counting_8=counting_8, modulo_counting_8=modulo_counting_8)
-            # counting_9=counting_9, modulo_counting_9=modulo_counting_9, counting_10=counting_10, modulo_counting_10=modulo_counting_10)
+            detect(save_img=False, counting_0=counting_0,modulo_counting_0=modulo_counting_0, counting_1=counting_1, modulo_counting_1=modulo_counting_1, counting_2=counting_2, modulo_counting_2=modulo_counting_2, counting_3=counting_3, modulo_counting_3=modulo_counting_3, counting_4=counting_4, modulo_counting_4=modulo_counting_4, counting_5=counting_5, modulo_counting_5=modulo_counting_5, counting_6=counting_6, modulo_counting_6=modulo_counting_6, counting_7=counting_7, modulo_counting_7=modulo_counting_7, counting_8=counting_8, modulo_counting_8=modulo_counting_8, counting_9=counting_9, modulo_counting_9=modulo_counting_9, counting_10=counting_10, modulo_counting_10=modulo_counting_10, counting_11=counting_11, modulo_counting_11=modulo_counting_11)
