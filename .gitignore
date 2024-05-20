@@ -1,5 +1,6 @@
 data/
 traffic_data/
+yolov7/inference/images/
 *.pth
 *.mp4
 *.pkl
