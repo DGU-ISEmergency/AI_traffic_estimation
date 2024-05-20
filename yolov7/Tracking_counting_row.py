@@ -24,81 +24,80 @@ from sort import *
 """ Random created palette"""
 palette = (2 ** 11 - 1, 2 ** 15 - 1, 2 ** 20 - 1)
 
-# right turn
 # 1
-area0_pointA = (520, 350)
-area0_pointB = (538, 350)
-area0_pointC = (510, 370)
-area0_pointD = (525, 370)
+area0_pointA = (550, 350)
+area0_pointB = (568, 350)
+area0_pointC = (540, 370)
+area0_pointD = (555, 370)
 
 
 # 1
-area1_pointA = (538, 350)
-area1_pointB = (565, 350)
-area1_pointC = (525, 370)
-area1_pointD = (555, 370)
+area1_pointA = (568, 350)
+area1_pointB = (595, 350)
+area1_pointC = (555, 370)
+area1_pointD = (585, 370)
 
 # 2
-area2_pointA = (565, 350)
-area2_pointB = (590, 350)
-area2_pointC = (555, 370)
-area2_pointD = (580, 370)
+area2_pointA = (595, 350)
+area2_pointB = (620, 350)
+area2_pointC = (585, 370)
+area2_pointD = (610, 370)
 
 # 3
-area3_pointA = (595, 350)
-area3_pointB = (620, 350)
-area3_pointC = (585, 370)
-area3_pointD = (610, 370)
+area3_pointA = (625, 350)
+area3_pointB = (650, 350)
+area3_pointC = (615, 370)
+area3_pointD = (640, 370)
 
 # 4
-area4_pointA = (620, 350)
-area4_pointB = (648, 350)
-area4_pointC = (610, 370)
-area4_pointD = (638, 370)
+area4_pointA = (650, 350)
+area4_pointB = (678, 350)
+area4_pointC = (640, 370)
+area4_pointD = (668, 370)
 #
 # 5
-area5_pointA = (648, 350)
-area5_pointB = (670, 350)
-area5_pointC = (638, 370)
-area5_pointD = (670, 370)
+area5_pointA = (678, 350)
+area5_pointB = (700, 350)
+area5_pointC = (668, 370)
+area5_pointD = (700, 370)
 
 # 6
-area6_pointA = (625, 640)
-area6_pointB = (667, 641)
-area6_pointC = (625, 665)
-area6_pointD = (663, 665)
+area6_pointA = (655, 640)
+area6_pointB = (697, 641)
+area6_pointC = (655, 665)
+area6_pointD = (693, 665)
 
 
 # 7
-area7_pointA = (667, 640)
-area7_pointB = (707, 641)
-area7_pointC = (665, 665)
-area7_pointD = (702, 668)
+area7_pointA = (697, 640)
+area7_pointB = (737, 641)
+area7_pointC = (695, 665)
+area7_pointD = (732, 668)
 
 # 8
-area8_pointA = (708, 638)
-area8_pointB = (750, 642)
-area8_pointC = (707, 667)
-area8_pointD = (742, 666)
+area8_pointA = (738, 638)
+area8_pointB = (780, 642)
+area8_pointC = (737, 667)
+area8_pointD = (772, 666)
 
 # 10
-area9_pointA = (740, 679)
-area9_pointB = (778, 679)
-area9_pointC = (739, 697)
-area9_pointD = (773, 695)
+area9_pointA = (770, 679)
+area9_pointB = (808, 679)
+area9_pointC = (769, 697)
+area9_pointD = (803, 695)
 
 # 11
-area10_pointA = (781, 608)
-area10_pointB = (813, 606)
-area10_pointC = (782, 631)
-area10_pointD = (817, 633)
+area10_pointA = (811, 578)
+area10_pointB = (843, 576)
+area10_pointC = (812, 601)
+area10_pointD = (847, 603)
 
 
 # 11
-area11_pointA = (866, 525)
-area11_pointB = (905, 525)
-area11_pointC = (866, 550)
-area11_pointD = (900, 550)
+area11_pointA = (896, 525)
+area11_pointB = (935, 525)
+area11_pointC = (896, 550)
+area11_pointD = (930, 550)
 
 counting_0 = 0
 modulo_counting_0 = 0
@@ -494,17 +493,18 @@ def detect(save_img=False,counting_0 = 0,modulo_counting_0 = 0, counting_1=0, mo
     })
 
     # Save the DataFrame to a CSV file
-    df.to_csv('tri_1_row.csv', index=False)
-
+    df.to_csv(f'{opt.source}_row_result.csv', index=False)
 
 if __name__ == '__main__':
+
     parser = argparse.ArgumentParser()
-    parser.add_argument('--weights', nargs='+', type=str, default='runs/train/yolov7x2/weights/best.pt', help='model.pt path(s)')
-    parser.add_argument('--source', type=str, default='inference/images/testssss.mp4', help='source')  # file/folder, 0 for webcam
+    parser.add_argument('--weights', nargs='+', type=str, default='runs/train/yolov7x2/weights/best.pt',
+                        help='model.pt path(s)')
+    parser.add_argument('--source', type=str, default='inference/images',help='source')
     parser.add_argument('--img-size', type=int, default=640, help='inference size (pixels)')
     parser.add_argument('--conf-thres', type=float, default=0.65, help='object confidence threshold')
     parser.add_argument('--iou-thres', type=float, default=0.45, help='IOU threshold for NMS')
-    parser.add_argument('--device', default='', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
+    parser.add_argument('--device', default='1', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
     parser.add_argument('--view-img', action='store_true', help='display results')
     parser.add_argument('--save-txt', action='store_true', help='save results to *.txt')
     parser.add_argument('--save-conf', action='store_true', help='save confidences in --save-txt labels')
@@ -518,14 +518,25 @@ if __name__ == '__main__':
     parser.add_argument('--exist-ok', action='store_true', help='existing project/name ok, do not increment')
     parser.add_argument('--no-trace', action='store_true', help='don`t trace model')
     opt = parser.parse_args()
+    file_list = os.listdir('inference/images')
+    mp4_files = [file for file in file_list if file.endswith('.mp4')]
+
+
     print(opt)
 
+    for i, file_name in enumerate(mp4_files):
+        # Set source argument for each file
+        opt.source = os.path.join('inference/images', file_name)
 
-    with torch.no_grad():
-        if opt.update:  # update all models (to fix SourceChangeWarning)
-            for opt.weights in ['runs/train/yolov7x2/weights/best.pt']:
-                detect(save_img=False,counting_0=counting_0,modulo_counting_0=modulo_counting_0, counting_1=counting_1, modulo_counting_1=modulo_counting_1, counting_2=counting_2, modulo_counting_2=modulo_counting_2, counting_3=counting_3, modulo_counting_3=modulo_counting_3, counting_4=counting_4, modulo_counting_4=modulo_counting_4, counting_5=counting_5, modulo_counting_5=modulo_counting_5, counting_6=counting_6, modulo_counting_6=modulo_counting_6, counting_7=counting_7, modulo_counting_7=modulo_counting_7, counting_8=counting_8, modulo_counting_8=modulo_counting_8, counting_9=counting_9, modulo_counting_9=modulo_counting_9, counting_10=counting_10, modulo_counting_10=modulo_counting_10, counting_11=counting_11, modulo_counting_11=modulo_counting_11)
-                strip_optimizer(opt.weights)
+        # Print source argument (you can remove this line)
+        print(f"Processing file {i + 1}: {opt.source}")
 
-        else:
-            detect(save_img=False, counting_0=counting_0,modulo_counting_0=modulo_counting_0, counting_1=counting_1, modulo_counting_1=modulo_counting_1, counting_2=counting_2, modulo_counting_2=modulo_counting_2, counting_3=counting_3, modulo_counting_3=modulo_counting_3, counting_4=counting_4, modulo_counting_4=modulo_counting_4, counting_5=counting_5, modulo_counting_5=modulo_counting_5, counting_6=counting_6, modulo_counting_6=modulo_counting_6, counting_7=counting_7, modulo_counting_7=modulo_counting_7, counting_8=counting_8, modulo_counting_8=modulo_counting_8, counting_9=counting_9, modulo_counting_9=modulo_counting_9, counting_10=counting_10, modulo_counting_10=modulo_counting_10, counting_11=counting_11, modulo_counting_11=modulo_counting_11)
+
+        with torch.no_grad():
+            if opt.update:  # update all models (to fix SourceChangeWarning)
+                for opt.weights in ['runs/train/yolov7x2/weights/best.pt']:
+                    detect(save_img=False,counting_0=counting_0,modulo_counting_0=modulo_counting_0, counting_1=counting_1, modulo_counting_1=modulo_counting_1, counting_2=counting_2, modulo_counting_2=modulo_counting_2, counting_3=counting_3, modulo_counting_3=modulo_counting_3, counting_4=counting_4, modulo_counting_4=modulo_counting_4, counting_5=counting_5, modulo_counting_5=modulo_counting_5, counting_6=counting_6, modulo_counting_6=modulo_counting_6, counting_7=counting_7, modulo_counting_7=modulo_counting_7, counting_8=counting_8, modulo_counting_8=modulo_counting_8, counting_9=counting_9, modulo_counting_9=modulo_counting_9, counting_10=counting_10, modulo_counting_10=modulo_counting_10, counting_11=counting_11, modulo_counting_11=modulo_counting_11)
+                    strip_optimizer(opt.weights)
+
+            else:
+                detect(save_img=False, counting_0=counting_0,modulo_counting_0=modulo_counting_0, counting_1=counting_1, modulo_counting_1=modulo_counting_1, counting_2=counting_2, modulo_counting_2=modulo_counting_2, counting_3=counting_3, modulo_counting_3=modulo_counting_3, counting_4=counting_4, modulo_counting_4=modulo_counting_4, counting_5=counting_5, modulo_counting_5=modulo_counting_5, counting_6=counting_6, modulo_counting_6=modulo_counting_6, counting_7=counting_7, modulo_counting_7=modulo_counting_7, counting_8=counting_8, modulo_counting_8=modulo_counting_8, counting_9=counting_9, modulo_counting_9=modulo_counting_9, counting_10=counting_10, modulo_counting_10=modulo_counting_10, counting_11=counting_11, modulo_counting_11=modulo_counting_11)

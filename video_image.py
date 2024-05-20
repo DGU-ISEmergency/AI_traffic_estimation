@@ -1,107 +1,89 @@
 import cv2
 
-path = "C:/Users/user/PycharmProjects/emergency/yolov7/inference/images/frame2.jpg"
+path = "C:/Users/user/PycharmProjects/emergency/yolov7/inference/test1/frame0.jpg"
 image = cv2.imread(path, cv2.IMREAD_COLOR)
-# 1
-# area1_pointA = (538, 350)
-# area1_pointB = (565, 350)
-# area1_pointC = (535, 380)
-# area1_pointD = (560, 380)
+
+
+# 1 -> 2번에서 우회전하는거
+area1_pointA = (412, 450)
+area1_pointB = (408, 465)
+area1_pointC = (381, 450)
+area1_pointD = (378, 465)
+
 
 # 2
-# area1_pointA = (565, 350)
-# area1_pointB = (590, 350)
-# area1_pointC = (560, 380)
-# area1_pointD = (585, 380)
+area2_pointA = (422, 485)
+area2_pointB = (418, 505)
+area2_pointC = (391, 485)
+area2_pointD = (388, 505)
 
 # 3
-# area1_pointA = (595, 350)
-# area1_pointB = (620, 350)
-# area1_pointC = (590, 370)
-# area1_pointD = (620, 370)
+area3_pointA = (422, 505)
+area3_pointB = (418, 523)
+area3_pointC = (391, 505)
+area3_pointD = (388, 523)
 
 # 4
-# area1_pointA = (620, 350)
-# area1_pointB = (648, 350)
-# area1_pointC = (615, 370)
-# area1_pointD = (648, 370)
+area4_pointA = (422, 523)
+area4_pointB = (418, 550)
+area4_pointC = (391, 523)
+area4_pointD = (388, 550)
 
-# 5
-# area1_pointA = (648, 350)
-# area1_pointB = (670, 350)
-# area1_pointC = (643, 370)
-# area1_pointD = (670, 370)
+# 5 가장 오른쪽 차선인데 아래에서 우회전 하는거
+# area5_pointA = (866, 525)
+# area5_pointB = (905, 525)
+# area5_pointC = (866, 550)
+# area5_pointD = (900, 550)
 
-# 6
-# area1_pointA = (376, 430)
-# area1_pointB = (372, 444)
-# area1_pointC = (366, 430)
-# area1_pointD = (362, 444)
-#
-# Line drawn from (388, 441) to (386, 460)
-# Line drawn from (360, 438) to (360, 463)
-# area6_pointA = (422, 407)
-# area6_pointB = (415, 438)
-# area6_pointC = (391, 407)
-# area6_pointD = (382, 437)
-
-# 6-1
-# 6
-# area6_pointA = (835, 434)
-# area6_pointB = (834, 457)
-# area6_pointC = (848, 433)
-# area6_pointD = (848, 456)
-#
-# # 7
-# area7_pointA = (834, 460)
-# area7_pointB = (832, 481)
-# area7_pointC = (847, 463)
-# area7_pointD = (853, 488)
+area6_pointA = (880, 425)
+area6_pointB = (880, 445)
+area6_pointC = (860, 425)
+area6_pointD = (860, 450)
 
 
-# 7
-area6_pointA = (866, 525)
-area6_pointB = (905, 525)
-area6_pointC = (866, 550)
-area6_pointD = (900, 550)
+# 6 초록
+area7_pointA = (880, 450)
+area7_pointB = (880, 468)
+area7_pointC = (860, 450)
+area7_pointD = (860, 468)
 
-# # 6 초록
-# area7_pointA = (780, 425)
-# area7_pointB = (780, 448)
-# area7_pointC = (760, 425)
-# area7_pointD = (760, 448)
-#
-# # 8 파랑
-# area8_pointA = (780, 448)
-# area8_pointB = (780, 465)
-# area8_pointC = (760, 448)
-# area8_pointD = (760, 465)
+# 8 파랑
+area8_pointA = (880, 468)
+area8_pointB = (880, 485)
+area8_pointC = (860, 468)
+area8_pointD = (860, 485)
 
-# area1_pointA = (318, 454)
-# area1_pointB = (315, 464)
-# area1_pointC = (298, 456)
-# area1_pointD = (297, 464)
 
-# area1_pointC = (316, 453)
-# area1_pointD = (314, 465)
+cv2.line(image, area1_pointA, area1_pointB, (0, 255, 0), 2)
+cv2.line(image, area1_pointC, area1_pointD, (0, 255, 0), 2)
+cv2.line(image, area2_pointA, area2_pointB, (0, 255, 255), 2)
+cv2.line(image, area2_pointC, area2_pointD, (0, 255, 255), 2)
+cv2.line(image, area3_pointA, area3_pointB, (255, 255, 0), 2)
+cv2.line(image, area3_pointC, area3_pointD, (255, 255, 0), 2)
+cv2.line(image, area4_pointA, area4_pointB, (255, 255, 255), 2)
+cv2.line(image, area4_pointC, area4_pointD, (255, 255, 255), 2)
+# cv2.line(image, area5_pointA, area5_pointB, (0, 255, 0), 2)
+# cv2.line(image, area5_pointC, area5_pointD, (0, 255, 0), 2)
 
-# Line drawn from (318, 454) to (315, 464)
-# Line drawn from (298, 456) to (297, 464)
-# Line drawn from (318, 442) to (316, 453)
-# Line drawn from (317, 455) to (314, 465)
 
-# Line drawn from (376, 427) to (366, 446)
-# Line drawn from (370, 446) to (364, 460)
-# Line drawn from (362, 468) to (356, 481)
-# Line drawn from (354, 487) to (354, 498)
-# Line drawn from (349, 501) to (339, 516)
-# Line drawn from (335, 526) to (331, 532)
 cv2.line(image, area6_pointA, area6_pointB, (0, 255, 0), 2)
 cv2.line(image, area6_pointC, area6_pointD, (0, 255, 0), 2)
-# cv2.line(image, area7_pointA, area7_pointB, (255, 255, 0), 2)
-# cv2.line(image, area7_pointC, area7_pointD, (255, 255, 0), 2)
-# cv2.line(image, area8_pointA, area8_pointB, (0, 255, 255), 2)
-# cv2.line(image, area8_pointC, area8_pointD, (0, 255, 255), 2)
+cv2.line(image, area7_pointA, area7_pointB, (255, 255, 0), 2)
+cv2.line(image, area7_pointC, area7_pointD, (255, 255, 0), 2)
+cv2.line(image, area8_pointA, area8_pointB, (0, 255, 255), 2)
+cv2.line(image, area8_pointC, area8_pointD, (0, 255, 255), 2)
+
+# cv2.line(image, area9_pointA, area9_pointB, (0, 255, 0), 2)
+# cv2.line(image, area9_pointC, area9_pointD, (0, 255, 0), 2)
+#
+# cv2.line(image, area10_pointA, area10_pointB, (0, 255, 0), 2)
+# cv2.line(image, area10_pointC, area10_pointD, (0, 255, 0), 2)
+#
+# cv2.line(image, area11_pointA, area11_pointB, (0, 255, 0), 2)
+# cv2.line(image, area11_pointC, area11_pointD, (0, 255, 0), 2)
+#
+# cv2.line(image, area0_pointA, area0_pointB, (0, 255, 0), 2)
+# cv2.line(image, area0_pointC, area0_pointD, (0, 255, 0), 2)
 
 
 

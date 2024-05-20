@@ -1,4 +1,5 @@
 import argparse
+import os
 import time
 from pathlib import Path
 import pandas as pd
@@ -25,29 +26,29 @@ from sort import *
 palette = (2 ** 11 - 1, 2 ** 15 - 1, 2 ** 20 - 1)
 
 # 1 -> 2번에서 우회전하는거
-area1_pointA = (412, 420)
-area1_pointB = (408, 435)
-area1_pointC = (381, 420)
-area1_pointD = (378, 435)
+area1_pointA = (412, 450)
+area1_pointB = (408, 465)
+area1_pointC = (381, 450)
+area1_pointD = (378, 465)
 
 
 # 2
-area2_pointA = (412, 465)
-area2_pointB = (408, 485)
-area2_pointC = (381, 465)
-area2_pointD = (378, 485)
+area2_pointA = (422, 485)
+area2_pointB = (418, 505)
+area2_pointC = (391, 485)
+area2_pointD = (388, 505)
 
 # 3
-area3_pointA = (412, 485)
-area3_pointB = (408, 503)
-area3_pointC = (381, 485)
-area3_pointD = (378, 503)
+area3_pointA = (422, 505)
+area3_pointB = (418, 523)
+area3_pointC = (391, 505)
+area3_pointD = (388, 523)
 
 # 4
-area4_pointA = (412, 503)
-area4_pointB = (408, 530)
-area4_pointC = (381, 503)
-area4_pointD = (378, 530)
+area4_pointA = (422, 523)
+area4_pointB = (418, 550)
+area4_pointC = (391, 523)
+area4_pointD = (388, 550)
 
 # 5 가장 오른쪽 차선인데 아래에서 우회전 하는거
 # area5_pointA = (866, 525)
@@ -55,24 +56,23 @@ area4_pointD = (378, 530)
 # area5_pointC = (866, 550)
 # area5_pointD = (900, 550)
 
-area6_pointA = (780, 405)
-area6_pointB = (780, 425)
-area6_pointC = (760, 405)
-area6_pointD = (760, 430)
+area6_pointA = (880, 425)
+area6_pointB = (880, 445)
+area6_pointC = (860, 425)
+area6_pointD = (860, 450)
+
 
 # 6 초록
-area7_pointA = (780, 430)
-area7_pointB = (780, 448)
-area7_pointC = (760, 430)
-area7_pointD = (760, 448)
+area7_pointA = (880, 450)
+area7_pointB = (880, 468)
+area7_pointC = (860, 450)
+area7_pointD = (860, 468)
 
 # 8 파랑
-area8_pointA = (780, 448)
-area8_pointB = (780, 465)
-area8_pointC = (760, 448)
-area8_pointD = (760, 465)
-
-
+area8_pointA = (880, 468)
+area8_pointB = (880, 485)
+area8_pointC = (860, 468)
+area8_pointD = (860, 485)
 
 
 # vehicles total counting variables
@@ -94,6 +94,8 @@ counting_7 = 0
 modulo_counting_7 = 0
 counting_8 = 0
 modulo_counting_8 = 0
+
+
 
 """" Calculates the relative bounding box from absolute pixel values. """
 def count_vehicles(count_vehicle, counting, array_ids, modulo_counting):
@@ -256,6 +258,7 @@ def detect(save_img=False,  counting_1=0, modulo_counting_1=0, counting_2=0, mod
     count_vehicle = 0
 
     t0 = time.time()
+
     for path, img, im0s, vid_cap in dataset:
         img = torch.from_numpy(img).to(device)
         img = img.half() if half else img.float()  # uint8 to fp16/32
@@ -346,6 +349,7 @@ def detect(save_img=False,  counting_1=0, modulo_counting_1=0, counting_2=0, mod
 
             # Print time (inference + NMS)
             print(f'{s}Done. ({(1E3 * (t2 - t1)):.1f}ms) Inference, ({(1E3 * (t3 - t2)):.1f}ms) NMS')
+            # print(frame)
 
             cv2.line(im0, area1_pointA, area1_pointB, (255, 0, 0), 2)
             cv2.line(im0, area1_pointC, area1_pointD, (255, 0, 0), 2)
@@ -434,18 +438,18 @@ def detect(save_img=False,  counting_1=0, modulo_counting_1=0, counting_2=0, mod
 
     })
 
-    df.to_csv('sssss22.csv', index=False)
+    df.to_csv(f'{opt.source}_result.csv', index=False)
 
 if __name__ == '__main__':
+
     parser = argparse.ArgumentParser()
     parser.add_argument('--weights', nargs='+', type=str, default='runs/train/yolov7x2/weights/best.pt',
                         help='model.pt path(s)')
-    parser.add_argument('--source', type=str, default='inference/images/test3.mp4',
-                        help='source')  # file/folder, 0 for webcam
+    parser.add_argument('--source', type=str, default='inference/images',help='source')
     parser.add_argument('--img-size', type=int, default=640, help='inference size (pixels)')
     parser.add_argument('--conf-thres', type=float, default=0.65, help='object confidence threshold')
     parser.add_argument('--iou-thres', type=float, default=0.45, help='IOU threshold for NMS')
-    parser.add_argument('--device', default='', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
+    parser.add_argument('--device', default='0', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
     parser.add_argument('--view-img', action='store_true', help='display results')
     parser.add_argument('--save-txt', action='store_true', help='save results to *.txt')
     parser.add_argument('--save-conf', action='store_true', help='save confidences in --save-txt labels')
@@ -459,23 +463,32 @@ if __name__ == '__main__':
     parser.add_argument('--exist-ok', action='store_true', help='existing project/name ok, do not increment')
     parser.add_argument('--no-trace', action='store_true', help='don`t trace model')
     opt = parser.parse_args()
+    file_list = os.listdir('inference/images')
+
     print(opt)
 
-with torch.no_grad():
-    if opt.update:  # update all models (to fix SourceChangeWarning)
-        for opt.weights in ['runs/train/yolov7x2/weights/best.pt']:
-            detect(save_img=False, counting_1=counting_1,
-                   modulo_counting_1=modulo_counting_1, counting_2=counting_2, modulo_counting_2=modulo_counting_2,
-                   counting_3=counting_3, modulo_counting_3=modulo_counting_3, counting_4=counting_4,
-                   modulo_counting_4=modulo_counting_4, counting_5=counting_5, modulo_counting_5=modulo_counting_5,
-                   counting_6=counting_6, modulo_counting_6=modulo_counting_6, counting_7=counting_7,
-                   modulo_counting_7=modulo_counting_7, counting_8=counting_8, modulo_counting_8=modulo_counting_8)
-            strip_optimizer(opt.weights)
+    for i, file_name in enumerate(file_list):
+        # Set source argument for each file
+        opt.source = os.path.join('inference/images', file_name)
 
-    else:
-        detect(save_img=False, counting_1=counting_1,
-               modulo_counting_1=modulo_counting_1, counting_2=counting_2, modulo_counting_2=modulo_counting_2,
-               counting_3=counting_3, modulo_counting_3=modulo_counting_3, counting_4=counting_4,
-               modulo_counting_4=modulo_counting_4, counting_5=counting_5, modulo_counting_5=modulo_counting_5,
-               counting_6=counting_6, modulo_counting_6=modulo_counting_6, counting_7=counting_7,
-               modulo_counting_7=modulo_counting_7, counting_8=counting_8, modulo_counting_8=modulo_counting_8)
+        # Print source argument (you can remove this line)
+        print(f"Processing file {i + 1}: {opt.source}")
+
+        with torch.no_grad():
+            if opt.update:  # update all models (to fix SourceChangeWarning)
+                for opt.weights in ['runs/train/yolov7x2/weights/best.pt']:
+                    detect(save_img=False, counting_1=counting_1,
+                           modulo_counting_1=modulo_counting_1, counting_2=counting_2, modulo_counting_2=modulo_counting_2,
+                           counting_3=counting_3, modulo_counting_3=modulo_counting_3, counting_4=counting_4,
+                           modulo_counting_4=modulo_counting_4, counting_5=counting_5, modulo_counting_5=modulo_counting_5,
+                           counting_6=counting_6, modulo_counting_6=modulo_counting_6, counting_7=counting_7,
+                           modulo_counting_7=modulo_counting_7, counting_8=counting_8, modulo_counting_8=modulo_counting_8)
+                    strip_optimizer(opt.weights)
+
+            else:
+                detect(save_img=False, counting_1=counting_1,
+                       modulo_counting_1=modulo_counting_1, counting_2=counting_2, modulo_counting_2=modulo_counting_2,
+                       counting_3=counting_3, modulo_counting_3=modulo_counting_3, counting_4=counting_4,
+                       modulo_counting_4=modulo_counting_4, counting_5=counting_5, modulo_counting_5=modulo_counting_5,
+                       counting_6=counting_6, modulo_counting_6=modulo_counting_6, counting_7=counting_7,
+                       modulo_counting_7=modulo_counting_7, counting_8=counting_8, modulo_counting_8=modulo_counting_8)
